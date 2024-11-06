@@ -135,7 +135,7 @@ Refer to the [SDK Installation Guide](https://developer.memryx.com/get_started/i
 
 **2. What do I do if an example isn't working?**
 
-Make sure you’ve followed all setup steps. You can also check the [Troubleshooting Guide](https://developer.memryx.com/troubleshooting/index.html) for more help or open an issue in the repository.
+Make sure you’ve followed all setup steps. You can also check the [Troubleshooting Guide](https://developer.memryx.com/troubleshooting/index.html) for more help, or open an issue in the repository.
 
 **3. Can I contribute to this repository?**
 
