@@ -12,6 +12,8 @@ import memryx as mx
 import argparse
 from time import sleep
 
+import streamlit as st
+
 def top_k_indices(arr, k):
     indices = np.argpartition(arr, -k)[-k:]
     sorted_indices = indices[np.argsort(-arr[indices])]
@@ -85,6 +87,11 @@ class MxaTinyStories:
         init_len = len(prompt)
         sequences = [prompt]
         scores = [0]
+        story_output = tokenizer.decode(prompt, skip_special_tokens=True)  # Start with the initial decoded prompt
+
+        # Placeholder for displaying the story as it generates
+        story_placeholder = st.empty()
+
         try:
             while(True):
                 all_candidates = []
@@ -111,35 +118,51 @@ class MxaTinyStories:
                 all_candidates = sorted(all_candidates, key=lambda x: x[1], reverse=True)
                 sequences, scores = zip(*all_candidates[:beam_width])
 
-                print(tokenizer.decode(sequences[0][-1], skip_special_tokens=True), end='', flush=True)
+                 # Decode the latest token and append it to the story
+                token_text = tokenizer.decode([sequences[0][-1]], skip_special_tokens=True)
+                story_output += token_text  # Append the token to the ongoing story text
+                story_placeholder.write(story_output)  # Update the placeholder with the latest story
+
                 if all(seq[-1] == tokenizer.eos_token_id for seq in sequences):
                     self.num_tokens += 1
                     break
                 else:
                     self.num_tokens += 1
         except KeyboardInterrupt:
-            print("")
+            st.write("Generation interrupted.")
 
         print("")
 
-if __name__=="__main__":
-    parser = argparse.ArgumentParser(description="Tiny stories")
-    parser.add_argument('--beam_width', type=int, help="the width of beam search",default=1,required=False)
-    args = parser.parse_args()
-    if os.path.exists("../models"):
-        data_dir = "../models"
-    elif os.path.exists("models"):
-        data_dir = "models"
-    else:
-        data_dir = "."
-    prompt = input("Type the beginning of a story: ")
-    model = MxaTinyStories(data_dir)
+# Initialize Streamlit app layout
+st.title("Tiny Story Generator")
+st.write("Enter the beginning of a story and let the AI generate the rest!")
 
-    #load tiny stories tokenizer from official huggingface repositories
+# User input for the story prompt
+prompt = st.text_input("Type the beginning of a story:", "")
+
+# Load tokenizer and model
+@st.cache_resource
+def load_model(data_dir, max_len=128):
+    model = MxaTinyStories(data_dir, max_len)
     tokenizer = AutoTokenizer.from_pretrained('roneneldan/TinyStories-33M')
+    return model, tokenizer
 
-    #encode the input prompt
-    input_ids = tokenizer.encode(prompt, return_tensors="np")
+# Specify data directory
+data_dir = "models" if os.path.exists("models") else "."
+model, tokenizer = load_model(data_dir)
 
-    #start generating the stories
-    model.generate(tokenizer,input_ids.tolist()[0],args.beam_width)
+# Beam width input
+beam_width = st.slider("Beam Width", min_value=1, max_value=2, value=1)
+
+# Generate button only enabled if the prompt is not empty
+if prompt:
+    if st.button("Generate Story"):
+        # Encode the input prompt
+        input_ids = tokenizer.encode(prompt, return_tensors="np")
+
+        # Start generating the story
+        st.write("**Story Continuation:**")
+        story = model.generate(tokenizer, input_ids.tolist()[0], beam_width)
+        
+else:
+    st.warning("Please enter the beginning of your story to generate a continuation.")

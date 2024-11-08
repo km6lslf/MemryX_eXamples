@@ -31,7 +31,7 @@ class AnnotatedFrame():
     detections: list[Detection] = field(default_factory=list)
 
 class MXObb:
-    detector_imgsz = 640
+    detector_imgsz = 1024
     letterbox = LetterBox((detector_imgsz, detector_imgsz))
     classes =  {
         0: 'plane', 
@@ -64,8 +64,9 @@ class MXObb:
         self.stage0_q = queue.Queue(maxsize=2)
         self.output_q = queue.Queue(maxsize=1)
 
-        self.accl = mx.AsyncAccl(str(Path(models_dir) / 'yolov8m-obb.dfp'))
-        self.accl.set_postprocessing_model(str(Path(models_dir) / 'yolov8m-obb_post.onnx'))
+
+        self.accl = mx.AsyncAccl(str(Path(models_dir) / "yolov8s-obb.dfp"))
+        self.accl.set_postprocessing_model(str(Path(models_dir) / "yolov8s-obb_post.onnx"))
         self.accl.connect_input(self._detector_source)
         self.accl.connect_output(self._detector_sink)
 

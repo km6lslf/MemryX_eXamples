@@ -17,16 +17,16 @@ utilizes `MXObb` to identify and count objects within an image.
 
 ## Overview
 
-| Property             | Details                                                                    |
-|----------------------|----------------------------------------------------------------------------|
-| **Model**            | [YoloV8m-OBB](https://github.com/ultralytics/ultralytics)                  |
-| **Model Type**       | Object Detection (Oriented Bounding Boxes)                                 |
-| **Framework**        | [Onnx](https://onnx.ai/)                                                   |
-| **Model Source**     | [YoloV8m-OBB](https://github.com/ultralytics/ultralytics)                  |
-| **Pre-compiled DFP** | [Download here](https://developer.memryx.com/example_files/yolov8_obb.zip) |
-| **Output**           | Object bounding box + keypoints                                            |
-| **OS**               | Linux                                                                      |
-| **License**          | [AGPL](LICENSE.md)                                                         |
+| Property             | Details                                                                                                                 |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------|
+| **Model**            | [YoloV8m-OBB](https://github.com/ultralytics/ultralytics)                                                               |
+| **Model Type**       | Object Detection (Oriented Bounding Boxes)                                                                              |
+| **Framework**        | [Onnx](https://onnx.ai/)                                                                                                |
+| **Model Source**     | [YoloV8m-OBB](https://github.com/ultralytics/ultralytics)                                                               |
+| **Pre-compiled DFP** | [Download here](https://developer.memryx.com/model_explorer/YOLO_v8_small_Oriented_Bounding_Boxes_1024_1024_3_onnx.zip) |
+| **Output**           | Object bounding box + keypoints                                                                                         |
+| **OS**               | Linux                                                                                                                   |
+| **License**          | [AGPL](LICENSE.md)                                                                                                      |
 
 ## Requirements
 
@@ -42,9 +42,7 @@ pip install ultralytics
 
 To download and unzip the precompiled DFPs, use the following commands:
 ```bash
-wget https://developer.memryx.com/example_files/yolov8m_obb.zip
-mkdir -p models
-unzip yolov8m_obb.zip -d models
+chmod +x models/download_model.sh; ./models/download_model.sh;
 ```
 
 <details>
@@ -59,8 +57,8 @@ python3 export_model.py
 You can now use the MemryX Neural Compiler to compile the model and generate the DFP file required by the accelerator:
 
 ```bash
-mx_nc -v -m yolov8m-obb.onnx --autocrop
-mv model_0_yolov8m-obb_post.onnx yolov8m-obb_post.onnx
+mx_nc -v -m yolov8s-obb.onnx --autocrop 
+mv model_0_yolov8s-obb_post.onnx yolov8s-obb_post.onnx 
 ```
 </details>
 
@@ -69,6 +67,7 @@ mv model_0_yolov8m-obb_post.onnx yolov8m-obb_post.onnx
 With the compiled model, you can now use the MXA to perform object detection. Run the following script to see object detection in action:
 
 ```bash
+cd src/
 python run.py
 ```
 

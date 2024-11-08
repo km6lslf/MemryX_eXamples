@@ -45,7 +45,7 @@ sudo apt-get install memx-accl memx-accl-plugins memx-utils-gui
 
 To download and unzip the precompiled DFPs, use the following commands:
 ```bash
-wget https://developer.memryx.com/example_files/dmultistream_objectdetection_yolov7Tiny.zip
+wget https://developer.memryx.com/example_files/multistream_objectdetection_yolov7Tiny.zip
 mkdir -p models
 unzip multistream_objectdetection_yolov7Tiny.zip -d models
 ```

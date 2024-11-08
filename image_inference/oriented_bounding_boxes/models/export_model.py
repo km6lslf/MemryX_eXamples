@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # Load a model
-model = YOLO("yolov8m-obb.pt")  # load an official model
+model = YOLO("yolov8s-obb.pt")  # load an official model
 
 # Export the model
-model.export(format="onnx", imgsz=640)
+model.export(format="onnx")

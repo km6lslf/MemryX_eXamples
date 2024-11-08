@@ -31,6 +31,11 @@ pip install transformers
 
 This package contains the tokenizers, etc., used in generative language models.
 
+Also, To run and deploy the application on the web, install Streamlit:
+
+```bash
+pip install streamlit
+```
 
 ## Running the Application
 
@@ -75,7 +80,7 @@ cd -
 Simply run:
 
 ```bash
-python3 src/run_tinystories.py
+streamlit run run_tinystories.py
 ```
 
 You will be presented with a prompt to start your story, then the language model will complete it.

@@ -18,7 +18,7 @@ The **MxFit** is a simple web-application based on Yolov8 pose estimation that s
 
 ## Demo
 
-![Demo GIF](../../figures/MxFit.gif)
+![Demo GIF](assets/MxFit.gif)
 
 ## Requirements
 

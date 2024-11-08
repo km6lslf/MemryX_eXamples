@@ -54,27 +54,12 @@ def draw_boxes(annotated_frame, image_path):
     plt.show()
 
 def check_models_dir(model_dir):
-    dfp_path = f'{model_dir}/yolov8m-obb.dfp'
-    post_path = f'{model_dir}/yolov8m-obb_post.onnx'
+    dfp_path = f'{model_dir}/yolov8s-obb.dfp'
+    post_path = f'{model_dir}/yolov8s-obb_post.onnx'
 
     if args.models_dir == '../models': 
         if not all(os.path.exists(f) for f in [dfp_path, post_path]):
-            # download models zip from https://developer.memryx.com/example_files/object_detection.zip
-            url = "https://developer.memryx.com/example_files/object_detection.zip"
-            zip_path = "../object_detection.zip"
-            
-            print("Downloading models zip file...")
-            urllib.request.urlretrieve(url, zip_path)
-            
-            # Unzip the folder in `../models`
-            print("Extracting models zip file...")
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall('../')
-            
-            # Remove the downloaded zip file
-            os.remove(zip_path)
-            
-            print("Models downloaded and extracted successfully.")
+            os.system('cd ..; chmod +x models/download_model.sh; ./models/download_model.sh')
     else:
         if not os.path.exists(dfp_path) or not os.path.exists(dfp_path):
             raise ValueError(f'{args.models_dir} is invalid.')
