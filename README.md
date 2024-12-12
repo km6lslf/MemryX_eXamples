@@ -36,7 +36,7 @@ To ensure a smooth experience with MemryX solutions, follow these steps before d
 ### Step 1: Prepare Your System and Install the MemryX SDK
 
 Before working with the examples, ensure your system is correctly set up by installing the MemryX SDK.
-Follow the detailed instructions here: [**MemryX SDK Get Started Guide**](https://developer.memryx.com/get_started/).
+Follow the detailed instructions here: [**MemryX SDK Get Started Guide**](https://developer.memryx.com/get_started/index.html).
 
 ### Step 2: Clone the MemryX eXamples Repository
 
